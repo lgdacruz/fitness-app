@@ -1,10 +1,12 @@
 {
   "expo": {
+    "scheme": "fitness-app",
+    "web": {
+      "bundler": "metro"
+    },
     "name": "fitness-app",
     "slug": "fitness-app",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "assetBundlePatterns": ["**/*"]
   }
 }
