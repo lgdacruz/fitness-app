@@ -1,18 +1,13 @@
 import { Link } from "expo-router";
-import {
-  ButtonCenter,
-  ScrollCenter,
-  TextDefault,
-  ViewCenter,
-} from "../src/style";
+import { ImageBG, ScrollCenter, TextDefault, ViewCenter } from "../src/style";
 import { TrainingUse } from "../src/contexts/training";
 import HeaderTraining from "../src/components/headerTraining";
 import Exercise from "../src/components/sectionExercise";
 import HeaderPage from "../src/components/headerPage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  const { allTrainings, setAllTrainings } = TrainingUse();
+  const { training, settings } = TrainingUse();
   const [indexTraining, setIndexTraining] = useState(0);
 
   const handleNext = () => {
@@ -22,11 +17,17 @@ export default function Home() {
     setIndexTraining(indexTraining - 1);
   };
 
-  if (allTrainings.length < 2 && !allTrainings[0]?.title) {
+  useEffect(() => {
+    setIndexTraining(0);
+  }, [training.length]);
+
+  if (training?.length < 2 && training[0].training.length === 0) {
     return (
-      <ViewCenter hg="100%" wd="100%" justify="space-around">
-        <TextDefault wd="80%" bold>
-          Você ainda não possui nenhum treino cadastrado
+      <ViewCenter hg="100%" wd="100%" justify="space-evenly">
+        <TextDefault wd="80%" bold font="20px">
+          {settings?.language === "en"
+            ? "You don't have training yet"
+            : "Você ainda não possui treino"}
         </TextDefault>
         <Link
           href="/create"
@@ -37,10 +38,14 @@ export default function Home() {
             shadowOpacity: 1,
             shadowRadius: 5,
             shadowOffset: { width: 0, height: 0 },
+            width: 130,
+            alignItems: "center",
+            justifyContent: "center",
+            display: "flex",
           }}
         >
           <TextDefault color="#000" font="20px" bold>
-            Criar treino
+            {settings?.language === "en" ? "Create" : "Criar"}
           </TextDefault>
         </Link>
       </ViewCenter>
@@ -48,20 +53,24 @@ export default function Home() {
   }
 
   return (
-    <ViewCenter hg="100%">
+    <ImageBG source={require("../src/assets/dumbbell.jpg")} hg="100%">
       <HeaderPage
         editable={false}
         actualIndex={indexTraining}
-        title={allTrainings[indexTraining]?.title}
+        title={training[indexTraining]?.title}
         handleNext={handleNext}
         handlePrevious={handlePrevious}
       />
       <ScrollCenter wd="100%">
         <HeaderTraining />
-        {allTrainings[indexTraining]?.training.map((exercise) => (
-          <Exercise itens={exercise} key={exercise.exercise} editable={false} />
+        {training[indexTraining]?.training?.map((unique, index) => (
+          <Exercise
+            itens={unique}
+            key={`${unique.exercise}+${index}`}
+            editable={false}
+          />
         ))}
       </ScrollCenter>
-    </ViewCenter>
+    </ImageBG>
   );
 }

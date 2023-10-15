@@ -1,10 +1,10 @@
-import { useState } from "react";
 import { ButtonCenter, Input, TextDefault } from "../style";
 import { ViewCenter } from "../style";
-import { ExercisesTypes, TrainingTypes } from "../types";
+
 import { TrainingUse } from "../contexts/training";
 
 export default function ExerciseCreate({ exercise, handle, saveExercise }) {
+  const { settings } = TrainingUse();
   return (
     <ViewCenter wd="100%">
       <ViewCenter wd="100%" fdir="row" style={{ gap: 1 }}>
@@ -14,7 +14,7 @@ export default function ExerciseCreate({ exercise, handle, saveExercise }) {
           wd="40%"
           value={exercise.exercise}
           onChangeText={(text) => handle({ ...exercise, exercise: text })}
-          placeholder="Ex: Rosca bíceps"
+          placeholder={settings.language === "en" ? "Exercise" : "Exercício"}
           inputMode="text"
           keyboardType="default"
           multiline
@@ -25,7 +25,8 @@ export default function ExerciseCreate({ exercise, handle, saveExercise }) {
           wd="20%"
           value={exercise.repeat}
           onChangeText={(text) => handle({ ...exercise, repeat: text })}
-          placeholder="Ex: 3"
+          placeholder={settings.language === "en" ? "N. series" : "N. séries"}
+          multiline
           inputMode="numeric"
           keyboardType="numbers-and-punctuation"
         />
@@ -35,7 +36,10 @@ export default function ExerciseCreate({ exercise, handle, saveExercise }) {
           wd="20%"
           value={exercise.count}
           onChangeText={(text) => handle({ ...exercise, count: text })}
-          placeholder="Ex: 10"
+          placeholder={
+            settings.language === "en" ? "N. repetitions" : "N. repetição"
+          }
+          multiline
           inputMode="numeric"
           keyboardType="numbers-and-punctuation"
         />
@@ -45,7 +49,7 @@ export default function ExerciseCreate({ exercise, handle, saveExercise }) {
           wd="20%"
           value={exercise.weight}
           onChangeText={(text) => handle({ ...exercise, weight: text })}
-          placeholder="Ex: 80"
+          placeholder={settings.language === "en" ? "weight" : "peso"}
           inputMode="numeric"
           keyboardType="numbers-and-punctuation"
         />
@@ -57,7 +61,7 @@ export default function ExerciseCreate({ exercise, handle, saveExercise }) {
         onPress={saveExercise}
       >
         <TextDefault font="22px" bold color="#000">
-          Salvar Exercício
+          {settings?.language === "en" ? "Save exercise" : "Salvar Exercício"}
         </TextDefault>
       </ButtonCenter>
     </ViewCenter>

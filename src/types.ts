@@ -22,11 +22,19 @@ export interface ExercisesTypes {
 export interface TrainingTypes {
   title: string;
   training: ExercisesTypes[];
-  last: boolean;
 }
 export interface ContextTrainingTypes {
-  allTrainings: TrainingTypes[];
-  setAllTrainings: React.Dispatch<React.SetStateAction<TrainingTypes[]>>;
-  SetTrainings: (allModifyTrainings: TrainingTypes[]) => Promise<void>;
-  GetTrainings: () => Promise<void>;
+  GetTraining: () => void;
+  GetSettings: () => Promise<void>;
+  settings: SettingsTypes;
+  training: TrainingTypes[];
+  setTraining: React.Dispatch<React.SetStateAction<TrainingTypes[]>>;
+  removeStorage: () => Promise<void>;
+  nonPersonalizedAd: boolean;
+  loading: boolean;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}
+export interface SettingsTypes {
+  language: string;
+  measure: string;
 }

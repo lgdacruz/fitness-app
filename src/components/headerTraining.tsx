@@ -1,11 +1,9 @@
+import { TrainingUse } from "../contexts/training";
 import { ViewCenter } from "../style";
-import {
-  AntDesign,
-  FontAwesome5,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function HeaderTraining({ editable }: { editable?: boolean }) {
+  const { settings } = TrainingUse();
   return (
     <ViewCenter
       wd="100%"
@@ -23,7 +21,7 @@ export default function HeaderTraining({ editable }: { editable?: boolean }) {
       >
         <MaterialCommunityIcons
           name="weight-lifter"
-          size={24}
+          size={30}
           color="#fff"
           style={{
             width: "40%",
@@ -32,19 +30,20 @@ export default function HeaderTraining({ editable }: { editable?: boolean }) {
         />
         <MaterialCommunityIcons
           name="ballot-recount-outline"
-          size={24}
+          size={30}
           color="#fff"
           style={{ width: "20%", textAlign: "center" }}
         />
         <MaterialCommunityIcons
           name="timer-sand"
-          size={24}
+          size={30}
           color="#fff"
           style={{ width: "20%", textAlign: "center" }}
         />
-        <FontAwesome5
-          name="weight-hanging"
-          size={24}
+
+        <MaterialCommunityIcons
+          name={settings?.measure === "kg" ? "weight-kilogram" : "weight-pound"}
+          size={30}
           color="#fff"
           style={{ width: "20%", textAlign: "center" }}
         />

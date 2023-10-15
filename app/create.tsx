@@ -1,18 +1,13 @@
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import {
   ButtonCenter,
-  Input,
   ScrollCenter,
   TextDefault,
   ViewCenter,
 } from "../src/style";
-import { useEffect, useRef, useState } from "react";
-import { ExercisesTypes, TrainingTypes } from "../src/types";
-import {
-  AntDesign,
-  FontAwesome5,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
+import { useRef, useState } from "react";
+import { ExercisesTypes } from "../src/types";
+
 import HeaderTraining from "../src/components/headerTraining";
 import ExerciseCreate from "../src/components/sectionExerciseCreate";
 import { TrainingUse } from "../src/contexts/training";
@@ -23,12 +18,13 @@ import { ScrollView } from "react-native-gesture-handler";
 
 export default function Create() {
   const router = useRouter();
-  const { allTrainings, setAllTrainings, GetTrainings } = TrainingUse();
+  const { training, setTraining, settings, removeStorage, GetTraining } =
+    TrainingUse();
 
   const [exercise, setExercise] = useState<ExercisesTypes>(
     {} as ExercisesTypes
   );
-  const [indexTraining, setIndexTraining] = useState(allTrainings?.length - 1);
+  const [indexTraining, setIndexTraining] = useState(0);
 
   const scrollRef = useRef<ScrollView>();
 
@@ -41,7 +37,7 @@ export default function Create() {
   };
 
   // EXERCISES
-  const SaveExercise = () => {
+  const SaveExercise = async () => {
     if (
       !exercise.count ||
       !exercise.exercise ||
@@ -50,81 +46,75 @@ export default function Create() {
     )
       return;
 
-    const clone = [...allTrainings];
-    const cloneActualTraining = { ...clone[indexTraining] };
-    cloneActualTraining.training =
-      cloneActualTraining.training?.concat(exercise);
-    clone[indexTraining] = cloneActualTraining;
+    let allTrainings = training;
+    allTrainings[indexTraining].training.push(exercise);
 
-    setAllTrainings(clone);
+    setTraining(allTrainings);
+    const trainingStr = JSON.stringify(training);
+    await AsyncStorage.setItem("@trainings", trainingStr);
+    GetTraining();
     setExercise({} as ExercisesTypes);
     scrollRef.current.scrollToEnd();
   };
-  const RemoveExercise = (choiceExerciseIndex: number) => {
-    const clone = [...allTrainings];
-    const cloneActualTraining = { ...clone[indexTraining] };
-    cloneActualTraining.training = cloneActualTraining.training?.filter(
-      (actualExercise, index) => index !== choiceExerciseIndex
-    );
-    clone[indexTraining] = cloneActualTraining;
-    setAllTrainings(clone);
+  const RemoveExercise = async (choiceExerciseIndex: number) => {
+    let allTrainings = training;
+    allTrainings[indexTraining].training.splice(choiceExerciseIndex, 1);
+
+    setTraining(allTrainings);
+    const trainingStr = JSON.stringify(training);
+    await AsyncStorage.setItem("@trainings", trainingStr);
+    GetTraining();
   };
 
   // TRAINING
-  const SaveTraining = () => {
-    if (
-      !allTrainings[indexTraining].title ||
-      allTrainings[indexTraining].training.length === 0
-    )
-      return;
+  const CreateTraining = async () => {
+    let allTrainings = training;
+    allTrainings.push({ title: "", training: [] });
 
-    router.back();
+    setTraining(allTrainings);
+    const trainingStr = JSON.stringify(training);
+    await AsyncStorage.setItem("@trainings", trainingStr);
+    await new Promise(() => GetTraining());
+    setIndexTraining(indexTraining + 1);
   };
-  const UpdateTitle = (text: string) => {
-    const clone = [...allTrainings];
-    const cloneActualTraining = { ...clone[indexTraining] };
-    cloneActualTraining.title = text;
-    clone[indexTraining] = cloneActualTraining;
+  const DeleteTraining = async () => {
+    let allTrainings = training;
+    allTrainings.splice(indexTraining, 1);
 
-    setAllTrainings(clone);
-  };
-  const CreateTraining = () => {
-    const clone = [...allTrainings, { last: true, title: "", training: [] }];
-    setAllTrainings(clone);
-    setIndexTraining(clone?.length - 1);
-  };
-  const DeleteTraining = () => {
-    const clone = [...allTrainings, { last: true, title: "", training: [] }];
-    setAllTrainings(clone);
-    setIndexTraining(clone?.length - 1);
+    setTraining(allTrainings);
+    const trainingStr = JSON.stringify(training);
+    await AsyncStorage.setItem("@trainings", trainingStr);
+    await new Promise(() => GetTraining());
+    setIndexTraining(indexTraining - 1);
+    // removeStorage();
   };
 
   return (
     <ViewCenter hg="100%" justify="flex-start">
-      <ButtonCenter
-        fdir="row"
-        bgcolor="red"
-        wd="50%"
-        hg="40px"
-        style={{ gap: 10 }}
-        onPress={DeleteTraining}
-      >
-        <TextDefault font="22px" bold>
-          Deletar Treino
-        </TextDefault>
-      </ButtonCenter>
       <HeaderPage
         actualIndex={indexTraining}
-        title={allTrainings[indexTraining]?.title}
-        setTitle={(text: string) => UpdateTitle(text)}
+        title={training[indexTraining]?.title}
         editable
         handleNext={handleNext}
         handlePrevious={handlePrevious}
         createNewTraining={CreateTraining}
       />
+      <ButtonCenter
+        fdir="row"
+        bgcolor="red"
+        wd="50%"
+        hg="30px"
+        mg="10px"
+        onPress={DeleteTraining}
+        disabled={training?.length < 2}
+      >
+        <TextDefault font="20px" bold>
+          {settings?.language === "en" ? "Delete training" : "Deletar Treino"}
+        </TextDefault>
+      </ButtonCenter>
       <HeaderTraining editable />
       <ScrollCenter wd="100%" ref={scrollRef}>
-        {allTrainings[indexTraining]?.training?.map((unique, index) => (
+        {training[indexTraining]?.training?.map((unique, index) => (
           <Exercise
             itens={unique}
             key={`${unique.exercise}+${index}`}
@@ -138,19 +128,6 @@ export default function Create() {
           saveExercise={SaveExercise}
         />
       </ScrollCenter>
-      <ButtonCenter
-        fdir="row"
-        bgcolor="green"
-        wd="100%"
-        hg="50px"
-        style={{ gap: 10 }}
-        onPress={SaveTraining}
-      >
-        <AntDesign name="checkcircleo" size={24} color="#fff" />
-        <TextDefault font="22px" bold>
-          Salvar Treino
-        </TextDefault>
-      </ButtonCenter>
     </ViewCenter>
   );
 }

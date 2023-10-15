@@ -1,10 +1,11 @@
 import styled from "styled-components/native";
+import { LinearGradient } from "expo-linear-gradient";
 import { StyleTypes } from "./types";
 
 const theme = {
   dark: {
     textColor: "#fff",
-    bgColor: "#000",
+    bgColor: "#131313",
   },
   light: {
     textColor: "#000",
@@ -30,7 +31,7 @@ export const ViewCenter = styled.View<StyleTypes>`
   height: ${(props) => (props.hg ? props.hg : "auto")};
   margin: ${(props) => (props.mg ? props.mg : "0px")};
   padding: ${(props) => (props.pd ? props.pd : "0px")};
-  background-color: ${(props) => (props.bgcolor ? props.bgcolor : "auto")};
+  background-color: ${(props) => (props.bgcolor ? props.bgcolor : "#000")};
 `;
 export const ButtonCenter = styled.TouchableOpacity<StyleTypes>`
   display: ${(props) => (props.display ? props.display : "flex")};
@@ -41,8 +42,8 @@ export const ButtonCenter = styled.TouchableOpacity<StyleTypes>`
   height: ${(props) => (props.hg ? props.hg : "auto")};
   margin: ${(props) => (props.mg ? props.mg : "0px")};
   padding: ${(props) => (props.pd ? props.pd : "0px")};
-  background-color: ${(props) => (props.bgcolor ? props.bgcolor : "auto")};
   border-radius: ${(props) => (props.radius ? props.radius : "0px")};
+  background-color: ${(props) => (props.bgcolor ? props.bgcolor : "auto")};
 `;
 export const ImageBG = styled.ImageBackground<StyleTypes>`
   display: ${(props) => (props.display ? props.display : "flex")};
@@ -71,4 +72,18 @@ export const Input = styled.TextInput<StyleTypes>`
   border-radius: ${(props) => (props.radius ? props.radius : "0px")};
   background-color: #bababa;
   vertical-align: top;
+`;
+
+export const GradientNavigation = styled(LinearGradient).attrs(
+  ({ focused }: { focused: boolean }) => ({
+    focused,
+    colors: focused ? ["#686868", "#fff"] : ["transparent", "transparent"],
+  })
+)`
+  width: 70px;
+  height: 70px;
+  border-radius: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

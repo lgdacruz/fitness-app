@@ -1,14 +1,10 @@
 import { useState } from "react";
-import { ButtonCenter, Input, TextDefault } from "../style";
+import { ButtonCenter, TextDefault } from "../style";
 import { ViewCenter } from "../style";
-import { ExercisesTypes, TrainingTypes } from "../types";
-import { TrainingUse } from "../contexts/training";
+import { ExercisesTypes } from "../types";
+
 import { AntDesign } from "@expo/vector-icons";
-import Animated, {
-  Layout,
-  LightSpeedInLeft,
-  LightSpeedInRight,
-} from "react-native-reanimated";
+import Animated, { LightSpeedInLeft } from "react-native-reanimated";
 
 export default function Exercise({
   itens,
@@ -39,6 +35,7 @@ export default function Exercise({
             align="left"
             wd="40%"
             color={done && "red"}
+            font="20px"
             style={{
               textDecorationLine: done ? "line-through" : "none",
             }}
@@ -48,6 +45,7 @@ export default function Exercise({
           <TextDefault
             wd="20%"
             color={done && "red"}
+            font="20px"
             style={{
               textDecorationLine: done ? "line-through" : "none",
             }}
@@ -57,6 +55,7 @@ export default function Exercise({
           <TextDefault
             wd="20%"
             color={done && "red"}
+            font="20px"
             style={{
               textDecorationLine: done ? "line-through" : "none",
             }}
@@ -66,6 +65,7 @@ export default function Exercise({
           <TextDefault
             wd="20%"
             color={done && "red"}
+            font="20px"
             style={{
               textDecorationLine: done ? "line-through" : "none",
             }}
