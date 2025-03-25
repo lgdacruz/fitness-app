@@ -20,7 +20,7 @@ export default function TabBarNavigation({
   navigation: NavigationHelpers<ParamListBase, BottomTabNavigationEventMap>;
 }) {
   return (
-    <ViewCenter fdir="row">
+    <ViewCenter fdir="row" justify="justify" pd="10px">
       {state.routes.map((route, index) => {
         const isFocused = state.index === index;
         let icon: JSX.Element;
