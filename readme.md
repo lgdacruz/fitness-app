@@ -1,5 +1,7 @@
 <h1> Fitness App </h1>
 
+https://github.com/user-attachments/assets/c5268596-7cc2-4ffc-81c9-941fd00ae7da
+
 <h2> Descrição </h2>
 
 O Fitness App é um aplicativo mobile desenvolvido com React Native e Expo, projetado para auxiliar usuários a monitorar suas atividades físicas, acompanhar os treinos e manter uma rotina saudável.
@@ -7,16 +9,16 @@ O Fitness App é um aplicativo mobile desenvolvido com React Native e Expo, proj
 <h3> Tecnologias Utilizadas </h3>
 <ul>
 <li> React Native </li>
-- Expo
-- TypeScript
-- Styled Components
-- Async Storage
-- Expo Router
-- Axios
-- Google Mobile Ads
+<li> Expo </li>
+<li> TypeScript </li>
+<li> Styled Components </li>
+<li> Async Storage </li>
+<li> Expo Router </li>
+<li> Axios </li>
+<li> Google Mobile Ads </li>
 </ul>
 
-## Funcionalidades Principais
+<h3>Funcionalidades Principais</h3> 
 
 - Controle das atividades físicas
 - Interface responsiva e intuitiva
@@ -26,73 +28,49 @@ Instalação
 
 Clone o repositório:
 
-git clone https://github.com/seu-usuario/fitness-app.git
-cd fitness-app
+    git clone https://github.com/seu-usuario/fitness-app.git
+    cd fitness-app
 
 Instale as dependências:
 
-npm install
+    npm install
 
 Execute o comando para configurar permissões iOS:
 
-npx react-native setup-ios-permissions && npx pod-install
+    npx react-native setup-ios-permissions && npx pod-install
 
 Inicie o projeto:
 
-npm run start
+    npm run start
 
 Comandos Disponíveis
 
-npm run start - Inicia o aplicativo com o Expo
+Inicia o aplicativo com o Expo
+ 
+    npm run start 
 
-npm run android - Executa no Android
+Executa no Android
+    
+    npm run android
 
-npm run ios - Executa no iOS
+Executa no iOS
+    
+    npm run ios
 
-npm run web - Executa a versão web do app
+Executa a versão web do app
+    
+    npm run web
 
-Estrutura do Projeto
 
-fitness-app/
-├── src/
-│ ├── components/ # Componentes reutilizáveis
-│ ├── screens/ # Telas do aplicativo
-│ ├── services/ # Serviços e chamadas API
-│ ├── hooks/ # Hooks personalizados
-│ ├── assets/ # Recursos estáticos
-│ ├── styles/ # Estilização global
-│ └── navigation/ # Configuração de rotas
-├── package.json # Dependências e scripts
-├── app.json # Configurações do Expo
-├── tsconfig.json # Configuração do TypeScript
-└── README.md # Documentação do projeto
-
-Contribuição
-
-Contribuições são bem-vindas! Para contribuir:
-
-Fork este repositório
-
-Crie uma branch: git checkout -b minha-feature
-
-Faça suas alterações e commit: git commit -m 'Minha nova funcionalidade'
-
-Envie para o repositório remoto: git push origin minha-feature
-
-Abra um Pull Request
-
-Licença
-
-Este projeto está licenciado sob a MIT License. Veja o arquivo LICENSE para mais detalhes.
 
 Contato
 
 Caso tenha dúvidas ou sugestões, entre em contato:
 
-E-mail: seuemail@example.com
+E-mail: lsgdc06@example.com
 
-LinkedIn: seu-linkedin
+LinkedIn: https://www.linkedin.com/in/cruxzx/
 
-GitHub: seu-github
+GitHub: https://github.com/lgdacruz/
 
 Fitness App - Mantenha-se ativo e saudável! 💪
